@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OsuMusicPlayer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "OsuMusicPlayer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

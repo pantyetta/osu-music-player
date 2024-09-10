@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="OsuMusicPlayer.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:OsuMusicPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:SettingsModel}"
+    mc:Ignorable="d"
+    
+    xmlns:toolkit="using:CommunityToolkit.WinUI.Controls"
+    
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style x:Key="SettingsSectionHeaderTextBlockStyle"
+               BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+               TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Margin" Value="1,30,0,6" />
+            </Style.Setters>
+        </Style>
+    </Page.Resources>
+
+    <Grid x:Name="rootGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Widelayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource Breakpoint640Plus}" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowLayout">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Content.Padding" Value="16,0" />
+                        <Setter Target="PageHeader.Margin" Value="16,48,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <TextBlock
+            x:Name="PageHeader"
+            Margin="36,24,36,0"
+            Style="{StaticResource TitleTextBlockStyle}"
+            Text="Settings" />
+        <ScrollViewer x:Name="Content"
+            Grid.Row="1"
+            Padding="36,0,36,0"
+            IsTabStop="False"
+            UseSystemFocusVisuals="False"
+            VerticalScrollBarVisibility="Auto"
+            VerticalScrollMode="Auto">
+            <StackPanel>
+                <StackPanel>
+                    <Button Content="test load .osu file" Click="Button_ClickAsync" VerticalAlignment="Top" Margin="0,0,0,10"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="load all .osu file" Click="Load_AllMap_ClickAsync" VerticalAlignment="Top" Margin="0,0,0,10"/>
+                    <ProgressBar Width="130" Visibility="{Binding LoadProgressVisible}" Maximum="{Binding LoadProgressMax}" Value="{Binding LoadProgressValue}" Margin="10,0,0,0" IsIndeterminate="{Binding LoadProgressInit}"/>
+                </StackPanel>
+                <toolkit:SettingsCard Header="Osu Folder" Description="{Binding OsuPath}">
+                    <toolkit:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE8B7;" />
+                    </toolkit:SettingsCard.HeaderIcon>
+                    <Button Content="Select" Click="Choose_Button_Click" VerticalAlignment="Top"/>
+                </toolkit:SettingsCard>
+                
+                <!-- About  -->
+                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="About" />
+                <toolkit:SettingsExpander Description="© Pantyetta. All rights reserved." Header="{StaticResource AppTitleName}">
+                    <TextBlock Text="{x:Bind Version}" />
+                    <toolkit:SettingsExpander.Items>
+                        <toolkit:SettingsCard Header="Repository" Description="https://github.com/pantyetta/osu-music-player" IsClickEnabled="True" Click="RepositoryCard_Click">
+                            <toolkit:SettingsCard.ActionIcon>
+                                <FontIcon Glyph="&#xE8A7;" />
+                            </toolkit:SettingsCard.ActionIcon>
+                        </toolkit:SettingsCard>
+                    </toolkit:SettingsExpander.Items>
+                </toolkit:SettingsExpander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
